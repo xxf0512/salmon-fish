@@ -14,7 +14,7 @@ func WebStart(app controller.Application) {
 	router := gin.New()
 	router.Use(gin.Logger(), gin.Recovery())
 
-	h := handler.NewHandler()
+	h := handler.NewHandler(app.Setup)
 	apiv1 := router.Group("/api/v1")
 	{
 		apiv1.POST("/addFish", h.AddFish)
