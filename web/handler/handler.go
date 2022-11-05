@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"encoding/json"
 	"net/http"
 	"salmon-fish/service"
 
@@ -30,28 +31,30 @@ func (h *Handler) AddFish(c *gin.Context) {
 	// 	return
 	// }
 
-	payload, err := h.Setup.SaveFish(fish)
+	trxId, err := h.Setup.SaveFish(fish)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	data := map[string]interface{}{
-		"payload": payload,
+		"transaction_id": trxId,
 	}
 	c.JSON(http.StatusOK, data)
 }
 
 func (h *Handler) QueryInfoByFishId(c *gin.Context) {
 	fishId := c.Query("id")
-	payload, err := h.Setup.FindFishByFishId(fishId)
+	result, err := h.Setup.FindFishByFishId(fishId)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
+	var fish service.SalmonFish
+	json.Unmarshal(result, &fish)
 	data := map[string]interface{}{
-		"payload": payload,
+		"result": fish,
 	}
 	c.JSON(http.StatusOK, data)
 }

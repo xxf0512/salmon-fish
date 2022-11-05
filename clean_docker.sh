@@ -1,8 +1,9 @@
-sudo docker rm -f $(sudo docker ps -aq)
-sudo docker network prune
-sudo docker volume prune
+docker rm -f $(docker ps -aq)
+docker network prune
+docker volume prune
 cd fixtures && docker-compose up -d
 cd ..
-rm salmon-fish
 go build
 ./salmon-fish
+cd exploer && docker-compose up -d
+cd ..

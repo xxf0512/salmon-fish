@@ -77,7 +77,7 @@ func CreateAndJoinChannel(info *SdkEnvInfo) error {
 	for _, org := range info.Orgs {
 		// 加入通道
 		// Org peers join channel
-		if err := org.OrgResMgmt.JoinChannel(info.ChannelID, resmgmt.WithRetry(retry.DefaultResMgmtOpts), resmgmt.WithOrdererEndpoint("orderer.fish.com")); err != nil {
+		if err := org.OrgResMgmt.JoinChannel(info.ChannelID, resmgmt.WithRetry(retry.DefaultResMgmtOpts), resmgmt.WithOrdererEndpoint("orderer.example.com")); err != nil {
 			return fmt.Errorf("%s peers failed to JoinChannel: %v", org.OrgName, err)
 		}
 	}
@@ -97,7 +97,7 @@ func createChannel(signIDs []msp.SigningIdentity, info *SdkEnvInfo) error {
 		ChannelConfigPath: info.ChannelConfig,
 		SigningIdentities: signIDs}
 
-	if _, err := chMgmtClient.SaveChannel(req, resmgmt.WithRetry(retry.DefaultResMgmtOpts), resmgmt.WithOrdererEndpoint("orderer.fish.com")); err != nil {
+	if _, err := chMgmtClient.SaveChannel(req, resmgmt.WithRetry(retry.DefaultResMgmtOpts), resmgmt.WithOrdererEndpoint("orderer.example.com")); err != nil {
 		return fmt.Errorf("error should be nil for SaveChannel of orgchannel: %v", err)
 	}
 
@@ -108,7 +108,7 @@ func createChannel(signIDs []msp.SigningIdentity, info *SdkEnvInfo) error {
 			ChannelConfigPath: org.OrgAnchorFile,
 			SigningIdentities: []msp.SigningIdentity{signIDs[i]}}
 
-		if _, err = org.OrgResMgmt.SaveChannel(req, resmgmt.WithRetry(retry.DefaultResMgmtOpts), resmgmt.WithOrdererEndpoint("orderer.fish.com")); err != nil {
+		if _, err = org.OrgResMgmt.SaveChannel(req, resmgmt.WithRetry(retry.DefaultResMgmtOpts), resmgmt.WithOrdererEndpoint("orderer.example.com")); err != nil {
 			return fmt.Errorf("SaveChannel for anchor org %s error: %v", org.OrgName, err)
 		}
 	}

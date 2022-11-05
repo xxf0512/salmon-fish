@@ -5,7 +5,7 @@ client:
   logging:
     level: info
   cryptoconfig:
-    path: /home/pc433/xxf/education/fixtures/crypto-config
+    path: /home/pc433/xxf/salmon-fish/fixtures/crypto-config
   credentialStore:
     path: "/tmp/state-store"
     cryptoStore:
@@ -22,19 +22,19 @@ client:
     systemCertPool: true
     client:
       key:
-        path: /home/pc433/xxf/education/fixtures/crypto-config/peerOrganizations/org1.fish.com/users/User1@org1.fish.com/tls/client.key
+        path: /home/pc433/xxf/salmon-fish/fixtures/crypto-config/peerOrganizations/org1.example.com/users/User1@org1.example.com/tls/client.key
       cert:
-        path: /home/pc433/xxf/education/fixtures/crypto-config/peerOrganizations/org1.fish.com/users/User1@org1.fish.com/tls/client.crt
+        path: /home/pc433/xxf/salmon-fish/fixtures/crypto-config/peerOrganizations/org1.example.com/users/User1@org1.example.com/tls/client.crt
 
 channels:
   mychannel:
     peers:
-      peer0.org1.fish.com:
+      peer0.org1.example.com:
         endorsingPeer: true
         chaincodeQuery: true
         ledgerQuery: true
         eventSource: true
-      peer0.org2.fish.com:
+      peer0.org2.example.com:
         endorsingPeer: true
         chaincodeQuery: true
         ledgerQuery: true
@@ -52,23 +52,23 @@ channels:
 organizations:
   org1:
     mspid: Org1MSP
-    cryptoPath:  peerOrganizations/org1.fish.com/users/{username}@org1.fish.com/msp
+    cryptoPath:  peerOrganizations/org1.example.com/users/{username}@org1.example.com/msp
     peers:
-      - peer0.org1.fish.com
+      - peer0.org1.example.com
   org2:
     mspid: Org2MSP
-    cryptoPath:  peerOrganizations/org2.fish.com/users/{username}@org2.fish.com/msp
+    cryptoPath:  peerOrganizations/org2.example.com/users/{username}@org2.example.com/msp
     peers:
-      - peer0.org2.fish.com
+      - peer0.org2.example.com
   ordererorg:
       mspID: OrdererMSP
-      cryptoPath: ordererOrganizations/fish.com/users/{username}@fish.com/msp
+      cryptoPath: ordererOrganizations/example.com/users/{username}@example.com/msp
 
 orderers:
-  orderer.fish.com:
-    url: orderer.fish.com:7050
+  orderer.example.com:
+    url: orderer.example.com:7050
     grpcOptions:
-      ssl-target-name-override: orderer.fish.com
+      ssl-target-name-override: orderer.example.com
       keep-alive-time: 0s
       keep-alive-timeout: 20s
       keep-alive-permit: false
@@ -76,41 +76,41 @@ orderers:
       allow-insecure: false
 
     tlsCACerts:
-      path: /home/pc433/xxf/education/fixtures/crypto-config/ordererOrganizations/fish.com/tlsca/tlsca.fish.com-cert.pem
+      path: /home/pc433/xxf/salmon-fish/fixtures/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem
 
 peers:
-  peer0.org1.fish.com:
-    url: peer0.org1.fish.com:7051
+  peer0.org1.example.com:
+    url: peer0.org1.example.com:7051
     grpcOptions:
-      ssl-target-name-override: peer0.org1.fish.com
+      ssl-target-name-override: peer0.org1.example.com
       keep-alive-time: 0s
       keep-alive-timeout: 20s
       keep-alive-permit: false
       fail-fast: false
       allow-insecure: false
     tlsCACerts:
-      path: /home/pc433/xxf/education/fixtures/crypto-config/peerOrganizations/org1.fish.com/tlsca/tlsca.org1.fish.com-cert.pem
-  peer0.org2.fish.com:
-    url: peer0.org2.fish.com:9051
+      path: /home/pc433/xxf/salmon-fish/fixtures/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem
+  peer0.org2.example.com:
+    url: peer0.org2.example.com:9051
     grpcOptions:
-      ssl-target-name-override: peer0.org2.fish.com
+      ssl-target-name-override: peer0.org2.example.com
       keep-alive-time: 0s
       keep-alive-timeout: 20s
       keep-alive-permit: false
       fail-fast: false
       allow-insecure: false
     tlsCACerts:
-      path: /home/pc433/xxf/education/fixtures/crypto-config/peerOrganizations/org2.fish.com/tlsca/tlsca.org2.fish.com-cert.pem
+      path: /home/pc433/xxf/salmon-fish/fixtures/crypto-config/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem
 
 entityMatchers:
   peer:
-    - pattern: (\w+).org1.fish.com:(\d+)
-      urlSubstitutionExp: ${1}.org1.fish.com:${2}
-      sslTargetOverrideUrlSubstitutionExp: ${1}.org1.fish.com
-      mappedHost: peer0.org1.fish.com
+    - pattern: (\w+).org1.example.com:(\d+)
+      urlSubstitutionExp: ${1}.org1.example.com:${2}
+      sslTargetOverrideUrlSubstitutionExp: ${1}.org1.example.com
+      mappedHost: peer0.org1.example.com
 
-    - pattern: (\w+).org2.fish.com:(\d+)
-      urlSubstitutionExp: ${1}.org2.fish.com:${2}
-      sslTargetOverrideUrlSubstitutionExp: ${1}.org2.fish.com
-      mappedHost: peer0.org2.fish.com
+    - pattern: (\w+).org2.example.com:(\d+)
+      urlSubstitutionExp: ${1}.org2.example.com:${2}
+      sslTargetOverrideUrlSubstitutionExp: ${1}.org2.example.com
+      mappedHost: peer0.org2.example.com
   

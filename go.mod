@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/gin-gonic/gin v1.8.1
-	github.com/hyperledger/fabric-protos-go v0.0.0-20220827195505-ce4c067a561d
+	github.com/hyperledger/fabric-protos-go v0.0.0-20210311171918-e08edaab0493
 	github.com/hyperledger/fabric-sdk-go v1.0.0
 )
 

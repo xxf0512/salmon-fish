@@ -72,7 +72,7 @@ func main() {
 	// invoke chaincode set status
 	fmt.Println(">> 通过链码外部服务设置链码状态......")
 
-	edu := service.SalmonFish{
+	fish := service.SalmonFish{
 		FishId:          "123",
 		ProductorId:     "abc",
 		ProductorName:   "test",
@@ -86,7 +86,7 @@ func main() {
 		fmt.Println()
 		os.Exit(-1)
 	}
-	msg, err := serviceSetup.SaveFish(edu)
+	msg, err := serviceSetup.SaveFish(fish)
 	if err != nil {
 		fmt.Println(err.Error())
 	} else {

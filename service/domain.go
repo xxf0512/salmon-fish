@@ -14,9 +14,9 @@ type SalmonFish struct {
 	FishId          string    `form:"fish_id" json:"fish_id"`
 	ProductorId     string    `form:"productor_id" json:"productor_id"`
 	ProductorName   string    `form:"productor_name" json:"productor_name"`
-	ProductionPlace string    `form:"production_palce" json:"production_palce"`
-	ProductionTime  time.Time `form:"production_time" json:"production_time"`
-	ExpirationDate  time.Time `form:"expiration_date" json:"expiration_date"`
+	ProductionPlace string    `form:"production_place" json:"production_place"`
+	ProductionDate  string    `form:"production_date" json:"production_date"`
+	ExpirationDate  string    `form:"expiration_date" json:"expiration_date"`
 	Number          int       `form:"number" json:"number"`
 	Weight          float64   `form:"weight" json:"weight"`
 }

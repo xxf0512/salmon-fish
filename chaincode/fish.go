@@ -4,8 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"time"
-
 	"github.com/hyperledger/fabric-chaincode-go/shim"
 	"github.com/hyperledger/fabric-protos-go/peer"
 )
@@ -14,9 +12,9 @@ type SalmonFish struct {
 	FishId          string    `json:"fish_id"`
 	ProductorId     string    `json:"productor_id"`
 	ProductorName   string    `json:"productor_name"`
-	ProductionPlace string    `json:"production_palce"`
-	ProductionTime  time.Time `json:"production_time"`
-	ExpirationDate  time.Time `json:"expiration_date"`
+	ProductionPlace string    `json:"production_place"`
+	ProductionDate  string    `json:"production_date"`
+	ExpirationDate  string    `json:"expiration_date"`
 	Number          int       `json:"number"`
 	Weight          float64   `json:"weight"`
 }
@@ -59,19 +57,18 @@ func PutFish(stub shim.ChaincodeStubInterface, fish *SalmonFish) ([]byte, bool) 
 }
 
 func GetFishInfo(stub shim.ChaincodeStubInterface, fishId string) (*SalmonFish, bool) {
-	var fish *SalmonFish
-	// 根据身份证号码查询信息状态
+	var fish SalmonFish
 	b, err := stub.GetState(fishId)
 	if err != nil || b == nil {
-		return fish, false
+		return &fish, false
 	}
 
-	if err = json.Unmarshal(b, fish); err != nil {
-		return fish, false
+	if err = json.Unmarshal(b, &fish); err != nil {
+		return &fish, false
 	}
 
 	// 返回结果
-	return fish, true
+	return &fish, true
 }
 
 // 根据指定的查询字符串实现富查询
@@ -142,7 +139,7 @@ func (t *SalmonFishChaincode) queryFishByFishId(stub shim.ChaincodeStubInterface
 
 	// 拼装CouchDB所需要的查询字符串(是标准的一个JSON串)
 	// queryString := fmt.Sprintf("{\"selector\":{\"fishId\":\"%s\"}}", fishId)
-	queryString := fmt.Sprintf("{\"selector\":{\"fishId\":\"%s\"}}", fishId)
+	queryString := fmt.Sprintf("{\"selector\":{\"fish_id\":\"%s\"}}", fishId)
 
 	// 查询数据
 	result, err := GetFishByQueryString(stub, queryString)
@@ -164,7 +161,7 @@ func (t *SalmonFishChaincode) queryFishByProductorId(stub shim.ChaincodeStubInte
 
 	// 拼装CouchDB所需要的查询字符串(是标准的一个JSON串)
 	// queryString := fmt.Sprintf("{\"selector\":{\"productorId\":\"%s\"}}", productorId)
-	queryString := fmt.Sprintf("{\"selector\":{\"productorId\":\"%s\"}}", productorId)
+	queryString := fmt.Sprintf("{\"selector\":{\"productor_id\":\"%s\"}}", productorId)
 
 	// 查询数据
 	result, err := GetFishByQueryString(stub, queryString)
