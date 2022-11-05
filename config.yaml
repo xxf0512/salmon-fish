@@ -1,0 +1,116 @@
+version: 1.0.0
+
+client:
+  organization: org1
+  logging:
+    level: info
+  cryptoconfig:
+    path: /home/pc433/xxf/education/fixtures/crypto-config
+  credentialStore:
+    path: "/tmp/state-store"
+    cryptoStore:
+      path: /tmp/msp
+  BCCSP:
+    security:
+     enabled: true
+     default:
+      provider: "SW"
+     hashAlgorithm: "SHA2"
+     softVerify: true
+     level: 256
+  tlsCerts:
+    systemCertPool: true
+    client:
+      key:
+        path: /home/pc433/xxf/education/fixtures/crypto-config/peerOrganizations/org1.fish.com/users/User1@org1.fish.com/tls/client.key
+      cert:
+        path: /home/pc433/xxf/education/fixtures/crypto-config/peerOrganizations/org1.fish.com/users/User1@org1.fish.com/tls/client.crt
+
+channels:
+  mychannel:
+    peers:
+      peer0.org1.fish.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+      peer0.org2.fish.com:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+    policies:
+      queryChannelConfig:
+        minResponses: 1
+        maxTargets: 1
+        retryOpts:
+          attempts: 5
+          initialBackoff: 500ms
+          maxBackoff: 5s
+          backoffFactor: 2.0
+
+organizations:
+  org1:
+    mspid: Org1MSP
+    cryptoPath:  peerOrganizations/org1.fish.com/users/{username}@org1.fish.com/msp
+    peers:
+      - peer0.org1.fish.com
+  org2:
+    mspid: Org2MSP
+    cryptoPath:  peerOrganizations/org2.fish.com/users/{username}@org2.fish.com/msp
+    peers:
+      - peer0.org2.fish.com
+  ordererorg:
+      mspID: OrdererMSP
+      cryptoPath: ordererOrganizations/fish.com/users/{username}@fish.com/msp
+
+orderers:
+  orderer.fish.com:
+    url: orderer.fish.com:7050
+    grpcOptions:
+      ssl-target-name-override: orderer.fish.com
+      keep-alive-time: 0s
+      keep-alive-timeout: 20s
+      keep-alive-permit: false
+      fail-fast: false
+      allow-insecure: false
+
+    tlsCACerts:
+      path: /home/pc433/xxf/education/fixtures/crypto-config/ordererOrganizations/fish.com/tlsca/tlsca.fish.com-cert.pem
+
+peers:
+  peer0.org1.fish.com:
+    url: peer0.org1.fish.com:7051
+    grpcOptions:
+      ssl-target-name-override: peer0.org1.fish.com
+      keep-alive-time: 0s
+      keep-alive-timeout: 20s
+      keep-alive-permit: false
+      fail-fast: false
+      allow-insecure: false
+    tlsCACerts:
+      path: /home/pc433/xxf/education/fixtures/crypto-config/peerOrganizations/org1.fish.com/tlsca/tlsca.org1.fish.com-cert.pem
+  peer0.org2.fish.com:
+    url: peer0.org2.fish.com:9051
+    grpcOptions:
+      ssl-target-name-override: peer0.org2.fish.com
+      keep-alive-time: 0s
+      keep-alive-timeout: 20s
+      keep-alive-permit: false
+      fail-fast: false
+      allow-insecure: false
+    tlsCACerts:
+      path: /home/pc433/xxf/education/fixtures/crypto-config/peerOrganizations/org2.fish.com/tlsca/tlsca.org2.fish.com-cert.pem
+
+entityMatchers:
+  peer:
+    - pattern: (\w+).org1.fish.com:(\d+)
+      urlSubstitutionExp: ${1}.org1.fish.com:${2}
+      sslTargetOverrideUrlSubstitutionExp: ${1}.org1.fish.com
+      mappedHost: peer0.org1.fish.com
+
+    - pattern: (\w+).org2.fish.com:(\d+)
+      urlSubstitutionExp: ${1}.org2.fish.com:${2}
+      sslTargetOverrideUrlSubstitutionExp: ${1}.org2.fish.com
+      mappedHost: peer0.org2.fish.com
+  
