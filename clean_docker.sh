@@ -4,6 +4,6 @@ docker volume prune
 cd fixtures && docker-compose up -d
 cd ..
 go build
-./salmon-fish
+nohup ./salmon-fish >> log &
 cd exploer && docker-compose up -d
 cd ..
