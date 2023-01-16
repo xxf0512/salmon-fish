@@ -5,5 +5,5 @@ cd fixtures && docker-compose up -d
 cd ..
 go build
 nohup ./salmon-fish >> log &
-cd exploer && docker-compose up -d
+cd explorer && docker-compose up -d
 cd ..

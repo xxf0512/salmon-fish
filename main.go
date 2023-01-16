@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	cc_name    = "simplecc"
+	cc_name    = "fish_chaincode"
 	cc_version = "1.0.0"
 	ROOTPATH   = "/home/pc433/xxf"
 )
